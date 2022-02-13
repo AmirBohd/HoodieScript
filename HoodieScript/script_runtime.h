@@ -5,6 +5,7 @@
 #include "hooks/game_frame_hook.h"
 #include "hooks/hkb_animation_hook.h"
 #include "hooks/session_send_hook.h"
+#include "hooks/session_receive_hook.h"
 #include "Hooks/has_speffect_hook.h"
 #include "Hooks/OnTaeEvent_hook.h"
 #include "Hooks/hksgetter_hook.h"
@@ -21,6 +22,8 @@ namespace hoodie_script {
 		static int on_hkb_animation(uintptr_t hbkCharacter, int animationId);
 		static void on_position_update(uintptr_t CsHkCharacterProxy, uintptr_t* SprjChrPhysicsModulePtr, uintptr_t unk0, uintptr_t unk1, uintptr_t unk2);
 		static void on_speffect(unsigned int handle, int speffect);
+		static uint32_t on_network_session_send(uintptr_t networkSession, uintptr_t* networkHandle, int32_t id, char* buffer, uint32_t maxLength);
+		static uint32_t on_network_session_receive(uintptr_t networkSession, uintptr_t* networkHandle, int32_t id, char* buffer, uint32_t maxLength, uint32_t receiveLength);
 		static void on_game_frame();
 		static void OnRenderFrame();
 		static bool initialize_file(std::filesystem::path file);
@@ -38,6 +41,7 @@ namespace hoodie_script {
 		static hkb_animation_hook* hkbAnimationHook;
 		static game_frame_hook* gameFrameHook;
 		static session_send_hook* sessionsendhook;
+		static session_receive_hook* sessionreceivehook;
 		static has_speffect_hook* hasspeffecthook;
 		static OnTaeEvent_hook* onTaeEvent_hook_instance;
 		static hksEnvGetter_hook* hksget_hook;

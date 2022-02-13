@@ -5,6 +5,8 @@
 #include "LuaEvents/OnParamLoaded.h"
 #include "LuaEvents/OnGameFrame.h"
 #include "LuaEvents/OnHkbAnimation.h"
+#include "LuaEvents/OnSessionSend.h"
+#include "LuaEvents/OnSessionReceive.h"
 #include "LuaEvents/OnSpeffectActive.h"
 #include "LuaEvents/OnRenderingFrame.h"
 #include "LuaEvents/OnHotkey.h"
@@ -29,6 +31,7 @@ namespace hoodie_script {
 	hkb_animation_hook* script_runtime::hkbAnimationHook = nullptr;
 	game_frame_hook* script_runtime::gameFrameHook = nullptr;
 	session_send_hook* script_runtime::sessionsendhook = nullptr;
+	session_receive_hook* script_runtime::sessionreceivehook = nullptr;
 	has_speffect_hook* script_runtime::hasspeffecthook = nullptr;
 	OnTaeEvent_hook* script_runtime::onTaeEvent_hook_instance = nullptr;
 	hksEnvGetter_hook* script_runtime::hksget_hook = nullptr;
@@ -60,7 +63,8 @@ namespace hoodie_script {
 		goodsUseHook = new hoodie_script::goods_use_hook();
 		hkbAnimationHook = new hoodie_script::hkb_animation_hook();
 		gameFrameHook = new hoodie_script::game_frame_hook();
-		//sessionsendhook = new hoodie_script::session_send_hook();
+		sessionsendhook = new hoodie_script::session_send_hook();
+		sessionreceivehook = new hoodie_script::session_receive_hook();
 		hasspeffecthook = new hoodie_script::has_speffect_hook();
 		onTaeEvent_hook_instance = new hoodie_script::OnTaeEvent_hook();
 		hksget_hook = new hoodie_script::hksEnvGetter_hook();
@@ -103,7 +107,7 @@ namespace hoodie_script {
 		//Install hooks
 		goodsUseHook->install();
 		hkbAnimationHook->install();
-		//sessionsendhook->install();
+		sessionsendhook->install();
 		hasspeffecthook->install();
 		onTaeEvent_hook_instance->install();
 		hksget_hook->install();
@@ -122,7 +126,7 @@ namespace hoodie_script {
 
 		goodsUseHook->tryRefresh();
 		hkbAnimationHook->tryRefresh();
-		//sessionsendhook->tryRefresh();
+		sessionsendhook->tryRefresh();
 		hasspeffecthook->tryRefresh();
 		onTaeEvent_hook_instance->tryRefresh();
 		hksget_hook->tryRefresh();
@@ -141,7 +145,7 @@ namespace hoodie_script {
 
 		goodsUseHook->uninstall();
 		hkbAnimationHook->uninstall();
-		//sessionsendhook->uninstall();
+		sessionsendhook->uninstall();
 		hasspeffecthook->uninstall();
 		onTaeEvent_hook_instance->uninstall();
 		hksget_hook->uninstall();
@@ -215,6 +219,16 @@ namespace hoodie_script {
 	void script_runtime::on_position_update(uintptr_t CsHkCharacterProxy, uintptr_t* SprjChrPhysicsModulePtr, uintptr_t unk0, uintptr_t unk1, uintptr_t unk2)
 	{
 		OnPositionUpdate::DoOnPositionUpdate(_luaState, CsHkCharacterProxy, SprjChrPhysicsModulePtr, unk0, unk1, unk2);
+	}
+
+	uint32_t script_runtime::on_network_session_send(uintptr_t networkSession, uintptr_t* networkHandle, int32_t id, char* buffer, uint32_t maxLength)
+	{
+		return OnSessionSend::DoOnSessionSend(_luaState, networkSession, networkHandle, id, buffer, maxLength);
+	}
+
+	uint32_t script_runtime::on_network_session_receive(uintptr_t networkSession, uintptr_t* networkHandle, int32_t id, char* buffer, uint32_t maxLength, uint32_t receiveLength)
+	{
+		return OnSessionReceive::DoOnSessionReceive(_luaState, networkSession, networkHandle, id, buffer, maxLength, receiveLength);
 	}
 
 	double uniform()

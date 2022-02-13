@@ -309,6 +309,10 @@ public:
 	*/
 	void setIsDead(const int32_t& isDead);
 
+	int32_t getLockOnTargetChrHandle() const;
+
+	void setLockOnTargetChrHandle(const int32_t& chrHandle);
+
 	/**
 	* Checks if the "No Gravity" debug flag is set for this Chr. This flag prevents falling of all kinds.
 	* 

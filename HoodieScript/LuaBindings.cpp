@@ -7,6 +7,8 @@
 #include "LuaEvents/OnGameFrame.h"
 #include "LuaEvents/OnRenderingFrame.h"
 #include "LuaEvents/OnPositionUpdate.h"
+#include "LuaEvents/OnSessionSend.h"
+#include "LuaEvents/OnSessionReceive.h"
 #include "HotKeyManager.h"
 #include "LuaObjects/LuaMemory.h"
 #include "GameObjects/sprj_chr_data_module.h"
@@ -218,10 +220,13 @@ namespace hoodie_script
 			"SubscribeToEventOnGameFrame", OnGameFrame::SubscribeToEventOnGameFrame,
 			"SubscribeToEventOnHksAct", OnHksAct::SubscribeToEventOnHksAct,
 			"SubscribeToEventOnHksEnv", OnHksEnv::SubscribeToEventOnHksEnv,
-			"SubscribeToEventOnPositionUpdate", OnPositionUpdate::SubscribeToEventOnPositionUpdate);
+			"SubscribeToEventOnPositionUpdate", OnPositionUpdate::SubscribeToEventOnPositionUpdate,
+			"SubscribeToEventOnSessionSend", OnSessionSend::SubscribeToEventOnSessionSend,
+			"SubscribeToEventOnSessionReceive", OnSessionReceive::SubscribeToEventOnSessionReceive);
 
 		//Functions
 		luaSol.set_function("RegisterHotkey", OnHotKey::RegisterHotkey);
+		luaSol.set_function("RegisterReleaseHotkey", OnHotKey::RegisterReleaseHotkey);
 		luaSol.set_function("UnregisterHotkey", OnHotKey::UnregisterHotkey);
 		luaSol.set_function("EntityHasSpeffect", EntityHasSpEffectSafe);
 		luaSol.set_function("print", Luaprint);
@@ -279,32 +284,6 @@ namespace hoodie_script
 		sol_playerins["getPlayerGameData"] = &PlayerIns::getPlayerGameData;
 		sol_playerins["hasPlayerGameData"] = &PlayerIns::hasPlayerGameData;
 		sol_playerins["getNetworkPointer"] = &PlayerIns::getNetworkPointer;
-		sol_playerins["getLeftHandWeapon"] = &PlayerIns::getLeftHandWeapon;
-		sol_playerins["getLeftHandWeaponActive"] = &PlayerIns::getLeftHandWeaponActive;
-		sol_playerins["setLeftHandWeapon"] = &PlayerIns::setLeftHandWeapon;
-		sol_playerins["setLeftHandWeaponActive"] = &PlayerIns::setLeftHandWeaponActive;
-		sol_playerins["GetActiveWeaponSlotRightHand"] = &PlayerIns::GetActiveWeaponSlotRightHand;
-		sol_playerins["GetActiveWeaponSlotLeftHand"] = &PlayerIns::GetActiveWeaponSlotLeftHand;
-		sol_playerins["getRightHandWeapon"] = &PlayerIns::getRightHandWeapon;
-		sol_playerins["setWeaponSheathState"] = &PlayerIns::setWeaponSheathState;
-		sol_playerins["getWeaponSheathState"] = &PlayerIns::getWeaponSheathState;
-		sol_playerins["getRightHandWeaponActive"] = &PlayerIns::getRightHandWeaponActive;
-		sol_playerins["setRightHandWeapon"] = &PlayerIns::setRightHandWeapon;
-		sol_playerins["setRightHandWeaponActive"] = &PlayerIns::setRightHandWeaponActive;
-		sol_playerins["getHead"] = &PlayerIns::getHead;
-		sol_playerins["setHead"] = &PlayerIns::setHead;
-		sol_playerins["getChest"] = &PlayerIns::getChest;
-		sol_playerins["setChest"] = &PlayerIns::setChest;
-		sol_playerins["getHands"] = &PlayerIns::getHands;
-		sol_playerins["setHands"] = &PlayerIns::setHands;
-		sol_playerins["getLegs"] = &PlayerIns::getLegs;
-		sol_playerins["setLegs"] = &PlayerIns::setLegs;
-		sol_playerins["getRing"] = &PlayerIns::getRing;
-		sol_playerins["setRing"] = &PlayerIns::setRing;
-		sol_playerins["getAmmo"] = &PlayerIns::getAmmo;
-		sol_playerins["setAmmo"] = &PlayerIns::setAmmo;
-		sol_playerins["getCovenant"] = &PlayerIns::getCovenant;
-		sol_playerins["setCovenant"] = &PlayerIns::setCovenant;
 		sol_playerins["isNoGoodsConsume"] = &PlayerIns::isNoGoodsConsume;
 		sol_playerins["setNoGoodsConsume"] = &PlayerIns::setNoGoodsConsume;
 		sol_playerins["getPlayerCtrl"] = &PlayerIns::getPlayerCtrl;
@@ -403,6 +382,30 @@ namespace hoodie_script
 		sol_EquipInventoryData["getInventoryItemById"] = &EquipInventoryData::getInventoryItemById;
 		sol_EquipInventoryData["getInventoryItemCount"] = &EquipInventoryData::getInventoryItemCount;
 		sol_EquipInventoryData["GetInventoryItems"] = &EquipInventoryData::GetInventoryItems;
+		sol_EquipInventoryData["getHead"] = &EquipInventoryData::getHead;
+		sol_EquipInventoryData["setHead"] = &EquipInventoryData::setHead;
+		sol_EquipInventoryData["getChest"] = &EquipInventoryData::getChest;
+		sol_EquipInventoryData["setChest"] = &EquipInventoryData::setChest;
+		sol_EquipInventoryData["getHands"] = &EquipInventoryData::getHands;
+		sol_EquipInventoryData["setHands"] = &EquipInventoryData::setHands;
+		sol_EquipInventoryData["getLegs"] = &EquipInventoryData::getLegs;
+		sol_EquipInventoryData["setLegs"] = &EquipInventoryData::setLegs;
+		sol_EquipInventoryData["getRing"] = &EquipInventoryData::getRing;
+		sol_EquipInventoryData["setRing"] = &EquipInventoryData::setRing;
+		sol_EquipInventoryData["getAmmo"] = &EquipInventoryData::getAmmo;
+		sol_EquipInventoryData["setAmmo"] = &EquipInventoryData::setAmmo;
+		sol_EquipInventoryData["getCovenant"] = &EquipInventoryData::getCovenant;
+		sol_EquipInventoryData["setCovenant"] = &EquipInventoryData::setCovenant;
+		sol_EquipInventoryData["getLeftHandWeapon"] = &EquipInventoryData::getLeftHandWeapon;
+		sol_EquipInventoryData["getLeftHandWeaponActive"] = &EquipInventoryData::getLeftHandWeaponActive;
+		sol_EquipInventoryData["setLeftHandWeapon"] = &EquipInventoryData::setLeftHandWeapon;
+		sol_EquipInventoryData["setLeftHandWeaponActive"] = &EquipInventoryData::setLeftHandWeaponActive;
+		sol_EquipInventoryData["GetActiveWeaponSlotRightHand"] = &EquipInventoryData::GetActiveWeaponSlotRightHand;
+		sol_EquipInventoryData["GetActiveWeaponSlotLeftHand"] = &EquipInventoryData::GetActiveWeaponSlotLeftHand;
+		sol_EquipInventoryData["getRightHandWeapon"] = &EquipInventoryData::getRightHandWeapon;
+		sol_EquipInventoryData["getRightHandWeaponActive"] = &EquipInventoryData::getRightHandWeaponActive;
+		sol_EquipInventoryData["setRightHandWeapon"] = &EquipInventoryData::setRightHandWeapon;
+		sol_EquipInventoryData["setRightHandWeaponActive"] = &EquipInventoryData::setRightHandWeaponActive;
 
 		sol::usertype<PlayerGameData> sol_playergamedata = luaSol.new_usertype<PlayerGameData>("PlayerGameData", sol::constructors<PlayerGameData(uintptr_t)>());
 		sol_playergamedata["getPlayerNo"] = &PlayerGameData::getPlayerNo;

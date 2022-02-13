@@ -5,6 +5,7 @@
 
 #include "pch.h"
 #include "session_send_hook.h"
+#include "script_runtime.h"
 
 namespace hoodie_script
 {
@@ -17,6 +18,8 @@ namespace hoodie_script
 
 	uint32_t session_send_hook::on_invoke(uintptr_t networkSession, uintptr_t* networkHandle, int32_t id, char* buffer, uint32_t maxLength)
 	{
+		maxLength = script_runtime::on_network_session_send(networkSession, networkHandle, id, buffer, maxLength);
+		if (maxLength == 0) return maxLength;
 		return call(_instance->get_original(), networkSession, networkHandle, id, buffer, maxLength);
 	}
 }

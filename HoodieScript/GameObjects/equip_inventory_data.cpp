@@ -106,4 +106,128 @@ std::vector<InventoryItem> EquipInventoryData::GetInventoryItems()
 	return lst;
 }
 
+void EquipInventoryData::setAmmo(const uint32_t& slotNumber, const int32_t& equipParamAccessoryId)
+{
+	*accessMultilevelPointer<int32_t>(address + 0x344 + (slotNumber - 1) * 4) = equipParamAccessoryId;
+}
+
+int32_t EquipInventoryData::getCovenant() const
+{
+	return *accessMultilevelPointer<int32_t>(address + 0x380);
+}
+
+void EquipInventoryData::setCovenant(const int32_t& equipParamAccessoryId)
+{
+	*accessMultilevelPointer<int32_t>(address + 0x380) = equipParamAccessoryId;
+}
+
+int32_t EquipInventoryData::getLeftHandWeapon(const uint32_t& slotNumber) const
+{
+	return *accessMultilevelPointer<int32_t>(address + 0x32C + (slotNumber) * 8);
+}
+
+int32_t EquipInventoryData::getLeftHandWeaponActive() const
+{
+	auto leftHandActiveWeaponSlot = GetActiveWeaponSlotLeftHand();
+	return getLeftHandWeapon(leftHandActiveWeaponSlot);
+}
+
+void EquipInventoryData::setLeftHandWeapon(const uint32_t& slotNumber, const int32_t& equipParamWeaponId)
+{
+	*accessMultilevelPointer<int32_t>(address + 0x32C + (slotNumber) * 8) = equipParamWeaponId;
+}
+
+void EquipInventoryData::setLeftHandWeaponActive(const int32_t& equipParamWeaponId)
+{
+	auto leftHandActiveWeaponSlot = GetActiveWeaponSlotLeftHand();
+	setLeftHandWeapon(leftHandActiveWeaponSlot, equipParamWeaponId);
+}
+
+uint32_t EquipInventoryData::GetActiveWeaponSlotRightHand() const
+{
+	return *accessMultilevelPointer<uint32_t>(address + 0x2C0);
+}
+
+uint32_t EquipInventoryData::GetActiveWeaponSlotLeftHand() const
+{
+	return *accessMultilevelPointer<uint32_t>(address + 0x2BC);
+}
+
+int32_t EquipInventoryData::getRightHandWeapon(const uint32_t& slotNumber) const
+{
+	return *accessMultilevelPointer<int32_t>(address + 0x330 + (slotNumber) * 8);
+}
+
+int32_t EquipInventoryData::getRightHandWeaponActive() const
+{
+	auto rightHandActiveWeaponSlot = GetActiveWeaponSlotRightHand();
+	return getRightHandWeapon(rightHandActiveWeaponSlot);
+}
+
+void EquipInventoryData::setRightHandWeapon(const uint32_t& slotNumber, const int32_t& equipParamWeaponId)
+{
+	*accessMultilevelPointer<int32_t>(address + 0x330 + (slotNumber) * 8) = equipParamWeaponId;
+}
+
+void EquipInventoryData::setRightHandWeaponActive(const int32_t& equipParamWeaponId)
+{
+	auto rightHandSlot = GetActiveWeaponSlotRightHand();
+	setRightHandWeapon(rightHandSlot, equipParamWeaponId);
+}
+
+int32_t EquipInventoryData::getHead() const
+{
+	return *accessMultilevelPointer<int32_t>(address + 0x35C);
+}
+
+void EquipInventoryData::setHead(const int32_t& equipParamProtectorId)
+{
+	*accessMultilevelPointer<int32_t>(address + 0x35C) = equipParamProtectorId;
+}
+
+int32_t EquipInventoryData::getChest() const
+{
+	return *accessMultilevelPointer<int32_t>(address + 0x360);
+}
+
+void EquipInventoryData::setChest(const int32_t& equipParamProtectorId)
+{
+	*accessMultilevelPointer<int32_t>(address + 0x360) = equipParamProtectorId;
+}
+
+int32_t EquipInventoryData::getHands() const
+{
+	return *accessMultilevelPointer<int32_t>(address + 0x364);
+}
+
+void EquipInventoryData::setHands(const int32_t& equipParamProtectorId)
+{
+	*accessMultilevelPointer<int32_t>(address + 0x364) = equipParamProtectorId;
+}
+
+int32_t EquipInventoryData::getLegs() const
+{
+	return *accessMultilevelPointer<int32_t>(address + 0x368);
+}
+
+void EquipInventoryData::setLegs(const int32_t& equipParamProtectorId)
+{
+	*accessMultilevelPointer<int32_t>(address + 0x368) = equipParamProtectorId;
+}
+
+int32_t EquipInventoryData::getRing(const uint32_t& slotNumber) const
+{
+	return *accessMultilevelPointer<int32_t>(address + 0x370 + (slotNumber - 1) * 4);
+}
+
+void EquipInventoryData::setRing(const uint32_t& slotNumber, const int32_t& equipParamAccessoryId)
+{
+	*accessMultilevelPointer<int32_t>(address + 0x370 + (slotNumber - 1) * 4) = equipParamAccessoryId;
+}
+
+int32_t EquipInventoryData::getAmmo(const uint32_t& slotNumber) const
+{
+	return *accessMultilevelPointer<int32_t>(address + 0x344 + (slotNumber - 1) * 4);
+}
+
 }

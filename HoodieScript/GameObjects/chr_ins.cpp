@@ -133,6 +133,16 @@ void ChrIns::setIsDead(const int32_t& isDead)
 	*accessMultilevelPointer<int32_t>(address + 0x50, 0x48, 0x11C) = isDead;
 }
 
+int32_t ChrIns::getLockOnTargetChrHandle() const
+{
+	return *accessMultilevelPointer<int32_t>(address + 0x50, 0x110, 0x330, 0x27DC);
+}
+
+void ChrIns::setLockOnTargetChrHandle(const int32_t& chrHandle)
+{
+	*accessMultilevelPointer<int32_t>(address + 0x50, 0x110, 0x330, 0x27DC) = chrHandle;
+}
+
 bool ChrIns::isNoGravity() const
 {
 	return (*accessMultilevelPointer<uint8_t>(address + 0x1A08) & static_cast<uint8_t>(pow(2, 6))) == pow(2, 6);

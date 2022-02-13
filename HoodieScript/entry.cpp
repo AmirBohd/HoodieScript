@@ -168,6 +168,7 @@ DWORD WINAPI init_thread(void* lpParam)
 	//MH_CreateHook((LPVOID)0x1410a08e0, Ds3LuaSetFunction, &ds3LuaSetFunctionFunPtrHook);
 	//MH_EnableHook((LPVOID)0x1410a08e0);
 	hoodie_script::script_runtime::initializeHooks();
+
 	return S_OK;
 }
 

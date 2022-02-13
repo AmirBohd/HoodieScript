@@ -32,10 +32,11 @@ namespace hoodie_script
 				if (PlayerIns::isPlayer(a.getAddress()))
 				{
 					logging::write_line("JumpTable : 666 - MainPlayer");
-					PlayerUtilities::ReplaceWeaponRightActiveNetworked(a.getRightHandWeaponActive(), jumpTableData->arg2);
+					//PlayerUtilities::ReplaceWeaponRightActiveNetworked(a.getRightHandWeaponActive(), jumpTableData->arg2);
 				}
 				else if (a.hasPlayerGameData())
 				{
+					/*
 					logging::write_line(L"JumpTable : 666 - " + senderCharacter.getCharacterString());
 					//std::cout << a.getRightHandWeapon(a.GetActiveWeaponSlotRightHand()) << std::endl;
 					auto slot = a.GetActiveWeaponSlotRightHand();
@@ -45,6 +46,7 @@ namespace hoodie_script
 					a.setRightHandWeapon(slot, newWeapon);
 					logging::write_line(std::format("WP0 = {0}, WP1 = {1}, WP2 = {2}", a.getRightHandWeapon(0), a.getRightHandWeapon(1), a.getRightHandWeapon(2)));
 					//a.setRightHandWeapon(0, jmpTableArgs->arg2);
+					*/
 				}
 			}
 		});

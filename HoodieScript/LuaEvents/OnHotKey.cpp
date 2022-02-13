@@ -5,6 +5,7 @@
 namespace hoodie_script {
 
     std::deque<std::tuple<sol::function, VK, VK>> OnHotKey::OnHotKeyHandlers;
+    std::deque<std::pair<sol::function, VK>> OnHotKey::OnHotKeyReleaseHandlers;
 
     int OnHotKey::RegisterHotkey(sol::function function, VK key, VK modifier)
     {
@@ -12,14 +13,28 @@ namespace hoodie_script {
         return 1;
     }
 
+    int OnHotKey::RegisterReleaseHotkey(sol::function function, VK key)
+    {
+        OnHotKeyReleaseHandlers.push_back(std::pair<sol::function, VK>{ function, key });
+        return 1;
+    }
+
     int OnHotKey::UnregisterHotkey(sol::function function)
     {
-        for (size_t i = 0; i < OnHotKeyHandlers.size(); i++)
+        for (size_t i = 0; i < OnHotKeyHandlers.size(); ++i)
         {
             auto& [funRef, key, modifier] = OnHotKey::OnHotKeyHandlers[i];
             if (funRef == function)
             {
                 OnHotKeyHandlers.erase(OnHotKeyHandlers.begin() + i--);
+            }
+        }
+        for (size_t i = 0; i < OnHotKeyReleaseHandlers.size(); ++i)
+        {
+            auto& [funRef, key] = OnHotKey::OnHotKeyReleaseHandlers[i];
+            if (funRef == function)
+            {
+                OnHotKeyReleaseHandlers.erase(OnHotKeyReleaseHandlers.begin() + i--);
             }
         }
         return 1;
@@ -33,6 +48,20 @@ namespace hoodie_script {
             bool modifierKeyPressed = modifier != NULL ? HotKeyManager::IsKeyDown(modifier) : true;
 
             if (HotKeyManager::WasKeyPressed(key) && modifierKeyPressed)
+            {
+                sol::protected_function fun = funRef;
+                sol::protected_function_result result = fun();
+                if (!result.valid())
+                {
+                    sol::error error = result;
+                    logging::write_line(error.what());
+                }
+            }
+        }
+        for (size_t i = 0; i < OnHotKeyReleaseHandlers.size(); ++i) {
+            auto &[funRef, key] = OnHotKey::OnHotKeyReleaseHandlers[i];
+
+            if (HotKeyManager::WasKeyReleased(key))
             {
                 sol::protected_function fun = funRef;
                 sol::protected_function_result result = fun();

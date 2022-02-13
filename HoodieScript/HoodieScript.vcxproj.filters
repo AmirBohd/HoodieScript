@@ -348,6 +348,15 @@
     <ClInclude Include="LuaEvents\OnPositionUpdate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="LuaEvents\OnSessionSend.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LuaEvents\OnSessionReceive.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Hooks\session_receive_hook.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -660,6 +669,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LuaEvents\OnPositionUpdate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaEvents\OnSessionSend.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LuaEvents\OnSessionReceive.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Hooks\session_receive_hook.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
