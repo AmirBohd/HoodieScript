@@ -24,6 +24,7 @@ namespace hoodie_script {
             {
                 receiveLength = result;
             }
+            else 
             {
                 sol::error error = result;
                 logging::write_line(error.what());

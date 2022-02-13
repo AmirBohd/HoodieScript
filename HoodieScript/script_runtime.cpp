@@ -108,6 +108,7 @@ namespace hoodie_script {
 		goodsUseHook->install();
 		hkbAnimationHook->install();
 		sessionsendhook->install();
+		sessionreceivehook->install();
 		hasspeffecthook->install();
 		onTaeEvent_hook_instance->install();
 		hksget_hook->install();
@@ -126,7 +127,8 @@ namespace hoodie_script {
 
 		goodsUseHook->tryRefresh();
 		hkbAnimationHook->tryRefresh();
-		sessionsendhook->tryRefresh();
+		//sessionsendhook->tryRefresh();
+		//sessionreceivehook->tryRefresh();
 		hasspeffecthook->tryRefresh();
 		onTaeEvent_hook_instance->tryRefresh();
 		hksget_hook->tryRefresh();
@@ -146,6 +148,7 @@ namespace hoodie_script {
 		goodsUseHook->uninstall();
 		hkbAnimationHook->uninstall();
 		sessionsendhook->uninstall();
+		sessionreceivehook->uninstall();
 		hasspeffecthook->uninstall();
 		onTaeEvent_hook_instance->uninstall();
 		hksget_hook->uninstall();
